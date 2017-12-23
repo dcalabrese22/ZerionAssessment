@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ZerionAssessment</string>
+
+    <string name="preference_file">com.dcalabrese22.dan.SHARED_PREFERENCES_FILE</string>
+    <string name="pref_access_token">access_token</string>
+    <string name="btn_get_token">Get Access Token</string>
+    <string name="label_name">Name:</string>
+    <string name="label_age">Age:</string>
+    <string name="label_phone">Phone:</string>
+    <string name="label_date">Date:</string>
 </resources>
