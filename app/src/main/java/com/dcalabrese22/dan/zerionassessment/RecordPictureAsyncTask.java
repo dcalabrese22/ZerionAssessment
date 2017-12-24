@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -21,13 +22,17 @@ import java.net.URL;
  * Class for the getting the picture of a record an placing in corresponding image view in the
  * background. Probably best to use Picasso or Glide, but no external libraries were to be used
  */
-public class RecordPictureAsyncTask extends AsyncTask<ZerionRecord, Void, Bitmap> {
+public class RecordPictureAsyncTask extends AsyncTask<RecordViewHolder, Void, Bitmap> {
 
-    private WeakReference<ImageView> mImageView;
+    private ZerionRecord mRecord;
+    private RecordViewHolder mViewHolder;
+    private int mPosition;
 
-    public RecordPictureAsyncTask(ImageView imageView) {
-        mImageView = new WeakReference<>(imageView);
+    public RecordPictureAsyncTask(ZerionRecord record, int position) {
+        mRecord = record;
+        mPosition = position;
     }
+
 
     @Override
     protected void onPreExecute() {
@@ -36,13 +41,17 @@ public class RecordPictureAsyncTask extends AsyncTask<ZerionRecord, Void, Bitmap
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        ImageView imageView = mImageView.get();
-        imageView.setImageBitmap(bitmap);
+        if (mViewHolder.position == mPosition) {
+            mViewHolder.picture.setImageBitmap(bitmap);
+        }
+
     }
 
     @Override
-    protected Bitmap doInBackground(ZerionRecord... zerionRecords) {
-        return getRecordBitmap(zerionRecords[0].getPictureUrl());
+    protected Bitmap doInBackground(RecordViewHolder... viewHolders) {
+        mViewHolder = viewHolders[0];
+        return getRecordBitmap(mRecord.getPictureUrl());
+
     }
 
 

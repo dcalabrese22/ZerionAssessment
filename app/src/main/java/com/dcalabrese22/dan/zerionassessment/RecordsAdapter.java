@@ -50,15 +50,23 @@ public class RecordsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        RecordViewHolder viewHolder;
         if (view == null) {
             view = mInflater.inflate(R.layout.record, viewGroup, false);
+            viewHolder = new RecordViewHolder();
+            viewHolder.name = view.findViewById(R.id.tv_record_name);
+            viewHolder.picture = view.findViewById(R.id.iv_record_picture);
+            viewHolder.position = i;
+            view.setTag(viewHolder);
+        } else {
+            viewHolder = (RecordViewHolder) view.getTag();
         }
-
-        TextView name = view.findViewById(R.id.tv_record_name);
-        name.setText(mRecords.get(i).getName());
-
-        ImageView pic = view.findViewById(R.id.iv_record_picture);
-        new RecordPictureAsyncTask(pic).execute(mRecords.get(i));
+        ZerionRecord record = (ZerionRecord) getItem(i);
+        viewHolder.name.setText(record.getName());
+        int position = viewHolder.position;
+        if (viewHolder.picture != null) {
+            new RecordPictureAsyncTask(record, position).execute(viewHolder);
+        }
 
         return view;
     }
@@ -66,4 +74,6 @@ public class RecordsAdapter extends BaseAdapter {
     public ArrayList<ZerionRecord> getData() {
         return mRecords;
     }
+
+
 }
