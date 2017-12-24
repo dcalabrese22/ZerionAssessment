@@ -21,10 +21,11 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Activity for displaying a list of records
@@ -130,10 +131,10 @@ public class RecordsActivity extends AppCompatActivity {
      * Helper function to populate the list of records
      */
     public void getRecordData() {
-        HttpURLConnection connection = null;
+        HttpsURLConnection connection = null;
         try {
             URL url = new URL(BASE_URL_FOR_RECORDS);
-            connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpsURLConnection) url.openConnection();
             String bearer = "Bearer " + mToken;
             connection.setRequestProperty("Authorization", bearer);
             InputStream is = connection.getInputStream();
@@ -167,10 +168,10 @@ public class RecordsActivity extends AppCompatActivity {
      * @return A record object
      */
     public ZerionRecord getSingleRecord(int id) {
-        HttpURLConnection connection = null;
+        HttpsURLConnection connection = null;
         try {
             URL url = new URL(BASE_URL_FOR_RECORDS + "/" + id);
-            connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpsURLConnection) url.openConnection();
             String bearer = "Bearer " + mToken;
             connection.setRequestProperty("Authorization", bearer);
             InputStream is = connection.getInputStream();

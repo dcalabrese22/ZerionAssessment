@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by dan on 12/21/17.
@@ -80,10 +80,10 @@ public class AccessTokenHelper {
      * @return access token as a string
      */
     public static String getAccessToken(String jwt) {
-        HttpURLConnection http = null;
+        HttpsURLConnection http = null;
         try {
             URL url = new URL("https://app.iformbuilder.com/exzact/api/oauth/token");
-            http = (HttpURLConnection) url.openConnection();
+            http = (HttpsURLConnection) url.openConnection();
             http.setRequestMethod("POST");
             http.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded; charset=UTF-8");
